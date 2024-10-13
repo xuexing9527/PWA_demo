@@ -1,0 +1,17 @@
+{
+  "name": "pwa_demo",
+  "version": "1.0.0",
+  "description": "PWA",
+  "main": "index.js",
+  "scripts": {
+    "test": "npm run dev"
+  },
+  "keywords": [
+    "PWA"
+  ],
+  "author": "xx",
+  "license": "ISC",
+  "devDependencies": {
+    "http-server": "^14.1.1"
+  }
+}

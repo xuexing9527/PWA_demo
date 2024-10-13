@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PWA Demo</title>
+    <link rel="manifest" href="/manifest.json">
+</head>
+
+<body>
+    <h1>PWA Offline Demo</h1>
+    <p>This app works offline!</p>
+    <script>
+        // 注册 Service Worker
+        if ('serviceWorker' in navigator) {
+            navigator.serviceWorker.register('/sw.js')
+                .then(() => console.log('Service Worker registered'))
+                .catch((error) => console.log('Service Worker registration failed:', error));
+        }
+
+
+
+
+        let deferredPrompt;
+        window.addEventListener('beforeinstallprompt', (event) => {
+            // 阻止默认的安装提示
+            event.preventDefault();
+            deferredPrompt = event;
+            // 显示安装按钮或提示
+            showInstallPrompt();
+        });
+
+        function showInstallPrompt() {
+            const addBtn = document.getElementById('installBtn');
+            addBtn.style.display = 'block';
+            addBtn.addEventListener('click', () => {
+                deferredPrompt.prompt(); // 显示安装提示
+                deferredPrompt.userChoice.then((choiceResult) => {
+                    if (choiceResult.outcome === 'accepted') {
+                        console.log('User accepted the install prompt');
+                    } else {
+                        console.log('User dismissed the install prompt');
+                    }
+                    deferredPrompt = null;
+                });
+            });
+        }
+
+    </script>
+</body>
+
+</html>
